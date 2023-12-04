@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <vector>
 
 using namespace std;
 
@@ -7,10 +8,15 @@ int main() {
   
   string line;
   int total = 0;
+  int line_num = 0;
+  vector <int> wins;
+  wins.resize(200,0);
+
   while (getline(cin, line)) {
     
     string current = "";
     int index = 0;
+    wins[line_num] += 1;
     
     // get index of information
     for (int i = 0; i < line.size(); i++) {
@@ -57,18 +63,22 @@ int main() {
         current = "";
       }
     }
-    cout << endl;
+    
     int matches = 0;
     for (auto mit = counts.begin(); mit != counts.end(); mit++) {
-      if (mit->second > 0 && matches == 0) {
-        matches += 1;
-      } else if (matches >= 1 && mit->second > 0) {
-        matches *= 2;
-      }
+      if (mit->second > 0) matches += 1;
     }
-    total += matches;
-
+    cout << "MATCHES " << matches << endl;
+    
+    for (int i=0; i < matches; i++) {
+      wins[i+line_num+1] += wins[line_num];
+    }
+    
+    line_num += 1;
   }
-  cout << "Total: " << total << endl;
+
+  for (int j : wins) total += j;
+
+  cout << "Wins: " << total << endl;
   return 0;
 }
