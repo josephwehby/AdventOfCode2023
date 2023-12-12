@@ -1,7 +1,6 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <set>
 
 using namespace std;
 
@@ -66,14 +65,22 @@ int main() {
     index++;
   }
   
-  set <long> positions;
+  long total = 2104769314;
+  long count = 0;
+  long min = 9223372036854775807; 
+  
+  cout << "Seed Pairs: " << seeds.size()/2 << endl;
+  
   for (int i = 0; i < seeds.size(); i+=2) {
     for (long n = seeds[i]; n < (seeds[i] + seeds[i+1]); n++) {
       long pos = find_location(n, mappings);
-      //cout << "Seed: " << n <<  " " << pos <<  endl;
-      positions.insert(pos);
+      if (pos < min) min = pos;
+      if (count % 75000 == 0) cout << "Pair " << i << " Percent Complete " << count << "/" << total << "\r";
+      count += 1;
     }
   }
-  cout << "Minimum: " << *(positions.begin()) << endl;
+  cout << endl;
+  cout << total << endl;
+  cout << "Minimum: " << min << endl;
   return 0;
 }
