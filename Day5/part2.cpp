@@ -75,7 +75,7 @@ int main() {
     for (long n = seeds[i]; n < (seeds[i] + seeds[i+1]); n++) {
       long pos = find_location(n, mappings);
       if (pos < min) min = pos;
-      if (count % 75000 == 0) cout << "Pair " << i << " Percent Complete " << count << "/" << total << "\r";
+      if (count % 75000 == 0) cout << "Percent Complete " << (double)count/total*100 << "\r";
       count += 1;
     }
   }
